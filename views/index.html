@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlobCDN - Quality SVG shapes on the fly</title>
+    <meta
+      name="description"
+      content="BlobCDN is a simple CDN for generating SVG shapes on the fly."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@blobcdn" />
+    <meta
+      name="twitter:title"
+      content="BlobCDN - Quality SVG shapes on the fly"
+    />
+    <meta
+      name="twitter:description"
+      content="BlobCDN is a simple CDN for generating SVG shapes on the fly."
+    />
+    <meta property="og:url" content="https://blobcdn.com/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="BlobCDN - Quality SVG shapes on the fly"
+    />
+    <meta
+      property="og:description"
+      content="BlobCDN is a simple CDN for generating SVG shapes on the fly."
+    />
+    <meta
+      property="og:image"
+      content="https://cdn.statically.io/screenshot/statically.io/flags/"
+    />
+    <meta
+      name="twitter:image"
+      content="https://cdn.statically.io/screenshot/statically.io/flags/"
+    />
+    <link rel="shortcut icon" href="/favicon.png" type="image/icon" />
+    <style>
+      body {
+        color: #444;
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+          Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        margin: 0;
+      }
+
+      header {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+      }
+
+      a {
+        color: #222;
+        text-decoration: none;
+      }
+
+      h1 {
+        color: #222;
+        font-size: 2em;
+      }
+
+      h2 {
+        font-size: 1.5em;
+        margin-top: 1.5em;
+      }
+
+      h3 {
+        font-size: 1.17em;
+      }
+
+      h4 {
+        margin: 1.33em 0 0.8em;
+      }
+
+      p {
+        line-height: 1.5;
+        margin: 0.8em 0;
+      }
+
+      code {
+        background-color: #feffc0;
+        border-radius: 2px;
+        padding: 2px 4px;
+      }
+
+      .container {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 1rem;
+        max-width: 640px;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      header nav a,
+      footer nav a {
+        border-radius: 4px;
+        padding: 6px 10px;
+      }
+
+      header nav a:hover,
+      header nav a:focus {
+        background-color: #ffe9e9;
+      }
+
+      footer nav a:hover,
+      footer nav a:focus {
+        background-color: #e9fff5;
+      }
+
+      footer {
+        padding: 2rem 0 6rem;
+      }
+
+      footer nav {
+        padding-bottom: 2em;
+      }
+
+      .logo img {
+        width: 135px;
+      }
+
+      .blob-img {
+        display: inline-block;
+        width: 320px;
+        height: 320px;
+      }
+
+      .monospace {
+        font-family: monospace;
+      }
+
+      .main-content {
+        padding-top: 3rem;
+      }
+
+      .main-content h3 {
+        margin-top: 2em;
+      }
+
+      .params h4 {
+        font-size: 1.1em;
+      }
+
+      .params p {
+        color: #666;
+      }
+
+      .span-gray {
+        color: #adadad;
+      }
+
+      .examples {
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        margin: 0 auto;
+        padding: 3rem 1rem;
+        max-width: 1024px;
+        place-items: center;
+      }
+
+      .examples img {
+        width: 200px;
+      }
+
+      .btn {
+        position: relative;
+        display: block;
+        margin: auto;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        cursor: pointer;
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-appearance: none;
+      }
+
+      .btn:focus {
+        text-decoration: none;
+        border-color: #51a7e8;
+        outline: none;
+        box-shadow: 0 0 5px rgba(81, 167, 232, 0.5);
+      }
+
+      .btn:hover,
+      .btn:active {
+        text-decoration: none;
+        background-color: #ddd;
+        background-image: linear-gradient(#eee, #ddd);
+        border-color: #ccc;
+      }
+
+      .btn:active {
+        background-color: #dcdcdc;
+        background-image: none;
+        border-color: #b5b5b5;
+        box-shadow: inset 0 2px 4px rgb(0 0 0 / 15%);
+      }
+
+      .tooltipped {
+        position: relative;
+      }
+
+      .tooltipped:after {
+        position: absolute;
+        z-index: 1000000;
+        display: none;
+        padding: 5px 8px;
+        font: normal normal 11px/1.5 Helvetica, arial, nimbussansl,
+          liberationsans, freesans, clean, sans-serif, 'Segoe UI Emoji',
+          'Segoe UI Symbol';
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        text-shadow: none;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: break-word;
+        white-space: pre;
+        pointer-events: none;
+        content: attr(aria-label);
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 3px;
+        -webkit-font-smoothing: subpixel-antialiased;
+      }
+
+      .tooltipped:before {
+        position: absolute;
+        z-index: 1000001;
+        display: none;
+        width: 0;
+        height: 0;
+        color: rgba(0, 0, 0, 0.8);
+        pointer-events: none;
+        content: '';
+        border: 5px solid transparent;
+      }
+
+      .tooltipped:hover:before,
+      .tooltipped:hover:after,
+      .tooltipped:active:before,
+      .tooltipped:active:after,
+      .tooltipped:focus:before,
+      .tooltipped:focus:after {
+        display: inline-block;
+        text-decoration: none;
+      }
+
+      .tooltipped-s:after {
+        top: 100%;
+        right: 50%;
+        margin-top: 5px;
+      }
+
+      .tooltipped-s:before {
+        top: auto;
+        right: 50%;
+        bottom: -5px;
+        margin-right: -5px;
+        border-bottom-color: rgba(0, 0, 0, 0.8);
+      }
+
+      .tooltipped-s:after {
+        -webkit-transform: translateX(50%);
+        -ms-transform: translateX(50%);
+        transform: translateX(50%);
+      }
+
+      @media (max-width: 1024px) {
+        .examples img {
+          width: 150px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .examples {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .examples div:last-child {
+          display: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .examples {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-rows: repeat(5, minmax(0, 1fr));
+        }
+
+        .examples div:last-child {
+          display: block;
+        }
+
+        .examples img {
+          width: 100px;
+        }
+      }
+    </style>
+    <script src="https://cdn.statically.io/gh/zenorocha/clipboard.js/v2.0.8/dist/clipboard.min.js"></script>
+  </head>
+  <body>
+    <header class="container">
+      <a class="logo" href="">
+        <h1><img src="/blobcdn-logo.svg" alt="BlobCDN logo" /></h1>
+      </a>
+
+      <nav>
+        <a href="https://github.com/fransallen/blobcdn">GitHub</a>
+        <a href="">Tweet this!</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <div class="text-center">
+        <img class="blob-img" src="/blob.svg" alt="Random blob image" />
+        <h3 class="monospace">https://blobcdn.com/blob.svg</h3>
+      </div>
+
+      <div class="main-content">
+        <h2>About BlobCDN</h2>
+        <p>BlobCDN is a simple CDN for generating SVG shapes on the fly.</p>
+
+        <h2>How to use</h2>
+        <p>
+          Our SVG shapes generation service is powered by a simple URL-based
+          API. All accessible trough
+          <code class="monospace">/blob.svg?:Parameters</code>.
+        </p>
+
+        <h2>Parameters</h2>
+        <div class="params">
+          <h4 class="monospace">
+            seed=<span class="span-gray">:Number|String</span>
+          </h4>
+          <p>
+            A given seed will always produce the same blob. Default to random.
+          </p>
+
+          <h4 class="monospace">
+            extraPoints=<span class="span-gray">:Number</span>
+          </h4>
+          <p>
+            Actual number of points will be `3 + extraPoints`. Default to 4.
+          </p>
+
+          <h4 class="monospace">
+            randomness=<span class="span-gray">:Number</span>
+          </h4>
+          <p>
+            Increases the amount of variation in point position. Default to 6.
+          </p>
+
+          <h4 class="monospace">size=<span class="span-gray">:Number</span></h4>
+          <p>Size of the bounding box in pixel. Default to 256.</p>
+
+          <h4 class="monospace">
+            fill=<span class="span-gray">:HexColor</span>
+          </h4>
+          <p>Color for shape. Default to random.</p>
+
+          <h4 class="monospace">
+            stroke=<span class="span-gray">:HexColor</span>
+          </h4>
+          <p>Color for stroke. Default to none.</p>
+
+          <h4 class="monospace">
+            strokeWidth=<span class="span-gray">:Number</span>
+          </h4>
+          <p>Width for stroke line. Default to 0.</p>
+        </div>
+      </div>
+    </main>
+
+    <section class="examples text-center">
+      <div>
+        <img
+          src="/blob.svg?seed=1&extraPoints=1&fill=f9ccff"
+          alt="blob image 1"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=1&extraPoints=1&fill=f9ccff"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=2&extraPoints=2&fill=d64d20"
+          alt="blob image 2"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=2&extraPoints=2&fill=d64d20"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=3&extraPoints=3&fill=5fdce0"
+          alt="blob image 3"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=3&extraPoints=3&fill=5fdce0"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=4&extraPoints=4&fill=dbb948"
+          alt="blob image 4"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=4&extraPoints=4&fill=dbb948"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=5&extraPoints=5&fill=d414f7"
+          alt="blob image 5"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=5&extraPoints=5&fill=d414f7"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=6&extraPoints=6&fill=c64160"
+          alt="blob image 6"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=6&extraPoints=6&fill=c64160"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=7&extraPoints=7&fill=7dd64d"
+          alt="blob image 7"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=7&extraPoints=7&fill=7dd64d"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=8&extraPoints=8&fill=eab3a5"
+          alt="blob image 8"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=8&extraPoints=8&fill=eab3a5"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=9&extraPoints=9&fill=d69f53"
+          alt="blob image 9"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=9&extraPoints=9&fill=d69f53"
+        >
+          Copy URL
+        </button>
+      </div>
+      <div>
+        <img
+          src="/blob.svg?seed=10&extraPoints=10&fill=4fcc0a"
+          alt="blob image 10"
+        />
+        <button
+          class="btn"
+          data-clipboard-text="https://blobcdn.com/blob.svg?seed=10&extraPoints=10&fill=4fcc0a"
+        >
+          Copy URL
+        </button>
+      </div>
+    </section>
+
+    <footer class="text-center">
+      <nav>
+        <a href="https://statically.io/">statically.io</a>
+        <a href="https://thedev.id/">thedev.id</a>
+      </nav>
+      <small>&copy; 2021 <a href="https://upset.dev/">Frans Allen</a></small>
+    </footer>
+
+    <script>
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        e.clearSelection();
+
+        showTooltip(e.trigger, 'Copied!');
+      });
+
+      var btns = document.querySelectorAll('.btn');
+
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('mouseleave', clearTooltip);
+        btns[i].addEventListener('blur', clearTooltip);
+      }
+
+      function clearTooltip(e) {
+        e.currentTarget.setAttribute('class', 'btn');
+        e.currentTarget.removeAttribute('aria-label');
+      }
+
+      function showTooltip(elem, msg) {
+        elem.setAttribute('class', 'btn tooltipped tooltipped-s');
+        elem.setAttribute('aria-label', msg);
+      }
+    </script>
+  </body>
+</html>

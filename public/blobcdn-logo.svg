@@ -1,0 +1,11 @@
+<svg width="166.82mm" height="33.979mm" version="1.1" viewBox="0 0 166.82 33.979" xmlns="http://www.w3.org/2000/svg">
+ <g transform="translate(155.4 -51.266)">
+  <g transform="translate(-175.05 -137.39)">
+   <g transform="matrix(.60631 0 0 .60631 -63.521 157.12)">
+    <path d="m161.18 108.04c12.016 0.44686 24.01-5.1561 28.19-16.431 4.7249-12.746 2.3234-28.034-8.8223-35.817-10.662-7.4449-24.795-2.9041-34.887 5.2962-8.4244 6.8447-10.287 18.333-6.88 28.639 3.3463 10.124 11.745 17.916 22.4 18.312" fill="#ff5f7a" stroke="#none" stroke-width="0"/>
+    <path d="m177.55 75.163a0.88834 0.88834 0 0 0-0.77282-0.45038h-11.637l1.951-14.907a0.89345 0.89345 0 0 0-1.6374-0.58052l-14.152 24.794a0.88834 0.88834 0 0 0 0.75664 1.3536h11.463l-1.5461 14.929a0.89367 0.89367 0 0 0 1.6459 0.54656l13.918-24.791a0.88834 0.88834 0 0 0 0.01-0.89434z" fill="#fff" stroke-width=".22209"/>
+   </g>
+   <text x="62.776329" y="216.83032" fill="#1a1a1a" font-family="sans-serif" font-size="29.035px" letter-spacing="0px" stroke-width="1.2389" word-spacing="0px" style="line-height:1.25" xml:space="preserve"><tspan x="62.776329" y="216.83032" fill="#1a1a1a" font-family="Ubuntu" font-size="29.035px" font-weight="bold" stroke-width="1.2389" style="line-height:1.25">BlobCDN</tspan></text>
+  </g>
+ </g>
+</svg>
