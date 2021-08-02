@@ -1,6 +1,6 @@
-# BlobCDN - Quality SVG shapes on the fly
+# BlobCDN
 
-BlobCDN is a simple CDN service to generate SVG shapes on the fly.
+BlobCDN is the CDN for beautiful SVG shapes.
 
 ## Start development server
 
