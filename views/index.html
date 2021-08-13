@@ -285,6 +285,14 @@
         transform: translateX(50%);
       }
 
+      .powered-by-vercel {
+        margin-top: 2em;
+      }
+
+      .powered-by-vercel img {
+        max-width: 172px;
+      }
+
       @media (max-width: 1024px) {
         .examples img {
           width: 150px;
@@ -326,7 +334,7 @@
 
       <nav>
         <a href="https://github.com/fransallen/blobcdn">GitHub</a>
-        <a href="">Tweet this!</a>
+        <a href="https://twitter.com/intent/tweet?text=⚡%EF%B8%8F%20I%20use%20@blobcdn%20to%20quickly%20generate%20SVG%20shapes%20on%20the%20fly!&url=https://blobcdn.com" target="_blank">Tweet this!</a>
       </nav>
     </header>
 
@@ -520,6 +528,11 @@
         <a href="https://thedev.id/">thedev.id</a>
       </nav>
       <small>&copy; 2021 <a href="https://upset.dev/">Frans Allen</a></small>
+      <div class="powered-by-vercel">
+        <a href="https://vercel.com/?utm_source=statically&utm_campaign=oss" target="_blank">
+          <img src="/powered-by-vercel.svg" alt="Powered by Vercel" />
+        </a>
+      </div>
     </footer>
 
     <script>
