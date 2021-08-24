@@ -13,7 +13,7 @@ Please feel free to submit an issue or pull request. To develop, you'll need Nod
 BlobCDN operates thanks to our sponsors for providing services for free.
 
 <a href="https://vercel.com/?utm_source=upsetdev&utm_campaign=oss">
-  <img width="200px" style="background:white" src="./public/vercel.svg" alt="Vercel" />
+  <img width="200px" src="./public/vercel.svg" alt="Vercel" />
 </a>
 
 ## License
