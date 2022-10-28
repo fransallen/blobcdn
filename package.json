@@ -9,8 +9,7 @@
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.12",
-    "prettier": "^2.3.2"
+    "nodemon": "^2.0.12"
   },
   "scripts": {
     "dev": "nodemon index.js",
