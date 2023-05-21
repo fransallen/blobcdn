@@ -1,6 +1,6 @@
 const etag = require('etag');
-const { getBlob } = require('./blob');
 const { parse } = require('url');
+const { getBlob } = require('./blob');
 const { getInt } = require('./validator');
 
 async function getApp(req, res) {

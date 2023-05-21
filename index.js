@@ -1,6 +1,7 @@
 const express = require('express');
-const app = express();
 const { getApp } = require('./app');
+
+const app = express();
 
 app.disable('x-powered-by');
 
