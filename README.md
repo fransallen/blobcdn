@@ -6,7 +6,7 @@ BlobCDN is the CDN for beautiful SVG shapes. The service allows you to quickly g
 
 ## Contributing
 
-Please feel free to submit an issue or pull request. To develop, you'll need Node.js. Run `yarn install` && `yarn dev`.
+Please feel free to submit an issue or pull request. To develop, you'll need Node.js. Run `bun install` && `bun dev`.
 
 ## Sponsors
 
