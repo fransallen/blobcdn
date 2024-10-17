@@ -1,0 +1,17 @@
+name: Create docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build and push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username ${{ github.repository_owner }} --password-stdin
+          docker build -t ghcr.io/${{ github.repository }} .
+          docker push ghcr.io/${{ github.repository}}
