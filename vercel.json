@@ -1,4 +1,5 @@
 {
+  "buildCommand": "npm run build",
   "builds": [
     {
       "src": "dist/index.js",
