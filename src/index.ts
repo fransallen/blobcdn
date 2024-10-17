@@ -1,9 +1,11 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
-import { getApp } from './app'; // Adjust the import based on your file structure
+import { getApp } from './app';
 
 const app = express();
 const port: number = parseInt(process.env.PORT || '3000', 10);
+
+app.disable('x-powered-by');
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../public')));

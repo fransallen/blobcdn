@@ -9,6 +9,7 @@
     "randomcolor": "^0.6.2"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.11",
     "@types/etag": "^1.8.0",
     "@types/express": "^4.17.14",
     "@types/node": "^22.7.5",
@@ -16,8 +17,11 @@
     "nodemon": "^2.0.12"
   },
   "scripts": {
-    "dev": "nodemon src/index.ts",
+    "dev": "bun --watch src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/index.js"
+    "build:docker": "docker build -t ghcr.io/fransallen/blobcdn .",
+    "start": "node dist/index.js",
+    "start:bun": "bun src/index.ts",
+    "start:docker": "docker rm -f blobcdn && docker run -p 3000:3000 --name blobcdn ghcr.io/fransallen/blobcdn"
   }
 }
