@@ -26,6 +26,9 @@ ENV NODE_ENV=production
 
 # copy production dependencies and source code into final image
 FROM base AS release
+
+LABEL org.opencontainers.image.source https://github.com/fransallen/blobcdn
+
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /app .
 
