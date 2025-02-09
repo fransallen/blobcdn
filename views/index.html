@@ -539,45 +539,32 @@
         <a href="https://upset.dev/fonts">Fonts</a>
       </nav>
       <small>Made by <a href="https://upset.dev/">Frans Allen</a></small>
-      <div class="powered-by-vercel">
-        <a
-          href="https://vercel.com/?utm_source=upsetdev&utm_campaign=oss"
-          target="_blank"
-        >
-          <img
-            src="/powered-by-vercel.svg"
-            alt="Powered by Vercel"
-            width="172"
-            height="36"
-          />
-        </a>
-      </div>
     </footer>
 
     <script>
-      var clipboard = new ClipboardJS('.btn');
+      var clipboard = new ClipboardJS(".btn");
 
-      clipboard.on('success', function (e) {
+      clipboard.on("success", function (e) {
         e.clearSelection();
 
-        showTooltip(e.trigger, 'Copied!');
+        showTooltip(e.trigger, "Copied!");
       });
 
-      var btns = document.querySelectorAll('.btn');
+      var btns = document.querySelectorAll(".btn");
 
       for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener('mouseleave', clearTooltip);
-        btns[i].addEventListener('blur', clearTooltip);
+        btns[i].addEventListener("mouseleave", clearTooltip);
+        btns[i].addEventListener("blur", clearTooltip);
       }
 
       function clearTooltip(e) {
-        e.currentTarget.setAttribute('class', 'btn');
-        e.currentTarget.removeAttribute('aria-label');
+        e.currentTarget.setAttribute("class", "btn");
+        e.currentTarget.removeAttribute("aria-label");
       }
 
       function showTooltip(elem, msg) {
-        elem.setAttribute('class', 'btn tooltipped tooltipped-s');
-        elem.setAttribute('aria-label', msg);
+        elem.setAttribute("class", "btn tooltipped tooltipped-s");
+        elem.setAttribute("aria-label", msg);
       }
     </script>
   </body>
