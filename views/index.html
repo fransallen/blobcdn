@@ -321,7 +321,7 @@
     <script src="https://cdn.statically.io/gh/zenorocha/clipboard.js/v2.0.8/dist/clipboard.min.js"></script>
     <script
       async
-      src="https://api-blobcdn.vercel.app/app"
+      src="https://api-scout.reflexapi.net/app"
       data-website-id="aa16420a-0c98-4afc-a068-ec99cad8d73f"
     ></script>
   </head>
@@ -542,29 +542,29 @@
     </footer>
 
     <script>
-      var clipboard = new ClipboardJS(".btn");
+      var clipboard = new ClipboardJS('.btn');
 
-      clipboard.on("success", function (e) {
+      clipboard.on('success', function (e) {
         e.clearSelection();
 
-        showTooltip(e.trigger, "Copied!");
+        showTooltip(e.trigger, 'Copied!');
       });
 
-      var btns = document.querySelectorAll(".btn");
+      var btns = document.querySelectorAll('.btn');
 
       for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("mouseleave", clearTooltip);
-        btns[i].addEventListener("blur", clearTooltip);
+        btns[i].addEventListener('mouseleave', clearTooltip);
+        btns[i].addEventListener('blur', clearTooltip);
       }
 
       function clearTooltip(e) {
-        e.currentTarget.setAttribute("class", "btn");
-        e.currentTarget.removeAttribute("aria-label");
+        e.currentTarget.setAttribute('class', 'btn');
+        e.currentTarget.removeAttribute('aria-label');
       }
 
       function showTooltip(elem, msg) {
-        elem.setAttribute("class", "btn tooltipped tooltipped-s");
-        elem.setAttribute("aria-label", msg);
+        elem.setAttribute('class', 'btn tooltipped tooltipped-s');
+        elem.setAttribute('aria-label', msg);
       }
     </script>
   </body>
