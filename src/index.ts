@@ -15,6 +15,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   if (!allowedHosts.includes(host)) {
     return res
       .status(403)
+      .contentType('text/plain')
       .send('BlobCDN 403 Forbidden: Please set HOSTNAME env var correctly.');
   }
   next();
