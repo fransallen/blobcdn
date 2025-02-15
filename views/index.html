@@ -29,14 +29,19 @@
       property="og:description"
       content="BlobCDN is a simple CDN for generating SVG shapes on the fly."
     />
-    <meta property="og:image" content="https://og.blobcdn.com/og.jpg" />
-    <meta name="twitter:image" content="https://og.blobcdn.com/og.jpg" />
+    <meta property="og:image" content="https://blobcdn.com/og.png" />
+    <meta name="twitter:image" content="https://blobcdn.com/og.png" />
     <link rel="shortcut icon" href="/favicon.png" type="image/icon" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap"
+    />
     <style>
       body {
         color: #444;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI,
+          Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+          sans-serif;
         margin: 0;
       }
 
@@ -130,6 +135,10 @@
         font-family: monospace;
       }
 
+      .font-normal {
+        font-weight: 400;
+      }
+
       .main-content {
         padding-top: 3rem;
       }
@@ -177,15 +186,9 @@
         color: #333;
         white-space: nowrap;
         cursor: pointer;
-        background-color: #eee;
-        background-image: linear-gradient(#fcfcfc, #eee);
+        background-color: #fff;
         border: 1px solid #d5d5d5;
-        border-radius: 3px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-appearance: none;
+        border-radius: 5px;
       }
 
       .btn:focus {
@@ -198,16 +201,8 @@
       .btn:hover,
       .btn:active {
         text-decoration: none;
-        background-color: #ddd;
-        background-image: linear-gradient(#eee, #ddd);
+        background-color: #f5f5f5;
         border-color: #ccc;
-      }
-
-      .btn:active {
-        background-color: #dcdcdc;
-        background-image: none;
-        border-color: #b5b5b5;
-        box-shadow: inset 0 2px 4px rgb(0 0 0 / 15%);
       }
 
       .tooltipped {
@@ -279,14 +274,6 @@
         transform: translateX(50%);
       }
 
-      .powered-by-vercel {
-        margin-top: 2em;
-      }
-
-      .powered-by-vercel img {
-        max-width: 172px;
-      }
-
       @media (max-width: 1024px) {
         .examples img {
           width: 150px;
@@ -317,6 +304,28 @@
           width: 100px;
         }
       }
+
+      .text-sm {
+        font-size: 0.8rem;
+        line-height: 1.25rem;
+      }
+
+      .text-base {
+        font-size: 1rem;
+        line-height: 1.5rem;
+      }
+
+      .text-lg {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+      }
+
+      @media (min-width: 768px) {
+        .md\:text-xl {
+          font-size: 1.25rem;
+          line-height: 1.75rem;
+        }
+      }
     </style>
     <script src="https://cdn.statically.io/gh/zenorocha/clipboard.js/v2.0.8/dist/clipboard.min.js"></script>
     <script
@@ -330,7 +339,7 @@
       <a class="logo" href="/">
         <h1>
           <img
-            src="/blobcdn-logo.svg"
+            src="/blobcdn-logo.png"
             alt="BlobCDN logo"
             width="135"
             height="27"
@@ -351,7 +360,12 @@
     <main class="container">
       <div class="text-center">
         <img class="blob-img" src="/blob.svg" alt="Random blob image" />
-        <h3 class="monospace">https://blobcdn.com/blob.svg</h3>
+        <p>Add this to your design:</p>
+        <h3 class="monospace text-sm md:text-xl">
+          <span class="font-normal">&lt;img src="</span
+          >https://blobcdn.com/blob.svg<span class="font-normal">"/&gt;</span>
+        </h3>
+        <button class="btn btn-randomize">Randomize</button>
       </div>
 
       <div class="main-content">
@@ -566,6 +580,18 @@
         elem.setAttribute('class', 'btn tooltipped tooltipped-s');
         elem.setAttribute('aria-label', msg);
       }
+
+      function randomizeImage() {
+        const img = document.querySelector('.blob-img');
+        img.src = '/blob.svg?t=' + new Date().getTime(); // Force reload with timestamp
+      }
+
+      document
+        .querySelector('.btn-randomize')
+        .addEventListener('click', randomizeImage);
+
+      // Auto-randomize every N seconds
+      setInterval(randomizeImage, 2000);
     </script>
   </body>
 </html>
