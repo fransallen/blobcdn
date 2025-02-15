@@ -10,8 +10,13 @@ jobs:
     name: Build and push
     runs-on: ubuntu-latest
     steps:
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - uses: actions/checkout@v3
       - run: |
+          bun i && bun run build
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username ${{ github.repository_owner }} --password-stdin
           docker build -t ghcr.io/${{ github.repository }} .
           docker push ghcr.io/${{ github.repository}}
