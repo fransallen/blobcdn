@@ -556,6 +556,29 @@
     </footer>
 
     <script>
+      let intervalId;
+
+      function randomizeImage() {
+        const img = document.querySelector('.blob-img');
+        img.src = '/blob.svg?t=' + new Date().getTime(); // Force reload with timestamp
+      }
+
+      // Function to reset the interval
+      function resetInterval() {
+        clearInterval(intervalId); // Clear the previous interval
+        randomizeImage(); // Trigger an immediate randomization
+        intervalId = setInterval(randomizeImage, 2000); // Start a new interval
+      }
+
+      document
+        .querySelector('.btn-randomize')
+        .addEventListener('click', resetInterval);
+
+      // Start the initial interval
+      intervalId = setInterval(randomizeImage, 2000);
+    </script>
+
+    <script>
       var clipboard = new ClipboardJS('.btn');
 
       clipboard.on('success', function (e) {
@@ -580,18 +603,6 @@
         elem.setAttribute('class', 'btn tooltipped tooltipped-s');
         elem.setAttribute('aria-label', msg);
       }
-
-      function randomizeImage() {
-        const img = document.querySelector('.blob-img');
-        img.src = '/blob.svg?t=' + new Date().getTime(); // Force reload with timestamp
-      }
-
-      document
-        .querySelector('.btn-randomize')
-        .addEventListener('click', randomizeImage);
-
-      // Auto-randomize every N seconds
-      setInterval(randomizeImage, 2000);
     </script>
   </body>
 </html>
