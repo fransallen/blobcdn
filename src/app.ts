@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import etag from 'etag';
+import randomColor from 'randomcolor';
 import { getBlob } from './blob';
 import { getInt } from './validator';
 import os from 'os';
@@ -17,16 +18,19 @@ type BlobQuery = {
 export async function getApp(req: Request, res: Response): Promise<void> {
   try {
     const query: BlobQuery = req.query;
-
-    const blob = getBlob(
-      query.seed ?? Math.random(),
+    const color: string = randomColor();
+    const random = Math.random();
+    const blobQuery = [
+      query.seed ?? random.toString(),
       getInt(query.extraPoints) ?? 4,
       getInt(query.randomness) ?? 6,
       getInt(query.size) ?? 256,
-      query.fill,
-      query.stroke ?? 'none',
+      query.fill ? `#${query.fill}` : color,
+      query.stroke ? `#${query.stroke}` : 'none',
       getInt(query.strokeWidth) ?? 0,
-    );
+    ] as const;
+
+    const blob = getBlob(...blobQuery);
 
     res
       .status(200)
@@ -37,6 +41,17 @@ export async function getApp(req: Request, res: Response): Promise<void> {
       .header(
         'Blob-Version',
         `${process.env.VERSION ?? '1.0-dev'}-${os.hostname()}`,
+      )
+      .header(
+        'Blob-Path',
+        `/blob.svg?seed=${blobQuery[0]}&extraPoints=${
+          blobQuery[1]
+        }&randomness=${blobQuery[2]}&size=${
+          blobQuery[3]
+        }&fill=${blobQuery[4].replace('#', '')}&stroke=${blobQuery[5].replace(
+          '#',
+          '',
+        )}&strokeWidth=${blobQuery[6]}`,
       )
       .send(blob);
   } catch (e) {
