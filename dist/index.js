@@ -8,6 +8,16 @@ const path_1 = __importDefault(require("path"));
 const app_1 = require("./app");
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT || '3000', 10);
+// Allowed hostnames
+const allowedHosts = ['blobcdn.com', 'localhost'];
+// Middleware to check hostname
+app.use((req, res, next) => {
+    const host = req.hostname; // Extract hostname from request
+    if (!allowedHosts.includes(host)) {
+        return res.status(403).send('403 Forbidden');
+    }
+    next();
+});
 app.disable('x-powered-by');
 // Serve static files
 app.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
