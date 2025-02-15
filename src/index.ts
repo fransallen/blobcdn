@@ -6,13 +6,16 @@ const app = express();
 const port: number = parseInt(process.env.PORT || '3000', 10);
 
 // Allowed hostnames
-const allowedHosts = ['blobcdn.com', 'localhost'];
+const allowedHosts = process.env.HOSTNAME
+  ? process.env.HOSTNAME.split(',').map((h) => h.trim()) // Support multiple domains via comma-separated values
+  : ['blobcdn.com', 'localhost'];
 
-// Middleware to check hostname
 app.use((req: Request, res: Response, next: NextFunction) => {
-  const host = req.hostname; // Extract hostname from request
+  const host = req.hostname;
   if (!allowedHosts.includes(host)) {
-    return res.status(403).send('403 Forbidden');
+    return res
+      .status(403)
+      .send('BlobCDN 403 Forbidden: Please set HOSTNAME env var correctly.');
   }
   next();
 });
