@@ -7,19 +7,18 @@ const port: number = parseInt(process.env.PORT || '3000', 10);
 
 // Allowed hostnames
 const allowedHosts = process.env.HOSTNAME
-  ? process.env.HOSTNAME.split(',').map((h) => h.trim()) // Support multiple domains via comma-separated values
-  : ['blobcdn.com', 'localhost'];
+  ? process.env.HOSTNAME.split(',').map((h) => h.trim())
+  : null; // If HOSTNAME is not set, do not apply the middleware
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const host = req.hostname;
-  if (!allowedHosts.includes(host)) {
-    return res
-      .status(403)
-      .contentType('text/plain')
-      .send('BlobCDN 403 Forbidden: Please set HOSTNAME env var correctly.');
-  }
-  next();
-});
+if (allowedHosts) {
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    const host = req.hostname;
+    if (!allowedHosts.includes(host)) {
+      return res.status(403).contentType('text/plain').send('403 Forbidden');
+    }
+    next();
+  });
+}
 
 app.disable('x-powered-by');
 
