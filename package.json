@@ -18,9 +18,9 @@
   },
   "scripts": {
     "dev": "bun --watch src/index.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "bun build src/index.ts --compile --minify --sourcemap --outfile blobcdn",
     "build:docker": "docker build -t ghcr.io/fransallen/blobcdn .",
-    "start": "bun dist/index.js",
-    "start:docker": "docker rm -f blobcdn && docker run -p 3000:3000 --name blobcdn ghcr.io/fransallen/blobcdn"
+    "start": "./blobcdn",
+    "start:docker": "docker rm -f blobcdn && docker run -e HOSTNAME=localhost -p 3000:3000 --name blobcdn ghcr.io/fransallen/blobcdn"
   }
 }
