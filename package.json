@@ -20,8 +20,7 @@
     "dev": "bun --watch src/index.ts",
     "build": "tsc -p tsconfig.json",
     "build:docker": "docker build -t ghcr.io/fransallen/blobcdn .",
-    "start": "node dist/index.js",
-    "start:bun": "bun src/index.ts",
+    "start": "bun dist/index.js",
     "start:docker": "docker rm -f blobcdn && docker run -p 3000:3000 --name blobcdn ghcr.io/fransallen/blobcdn"
   }
 }

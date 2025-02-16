@@ -40,7 +40,11 @@ export async function getApp(req: Request, res: Response): Promise<void> {
       .header('ETag', etag(blob))
       .header(
         'Blob-Version',
-        `${process.env.VERSION ?? '1.0-dev'}-${os.hostname()}`,
+        `${
+          process.env.VERSION
+            ? `${process.env.VERSION}-${os.hostname()}`
+            : '1.0-dev'
+        }`,
       )
       .header(
         'Blob-Path',
