@@ -1,0 +1,30 @@
+# fly.toml app configuration file generated for blobcdn on 2025-03-07T13:44:29+07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'blobcdn'
+primary_region = 'sin'
+
+[build]
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 2
+  processes = ['app']
+
+[[vm]]
+  size = 'shared-cpu-1x'
+
+[checks]
+  [checks.http_check_app]
+    grace_period = "10s"
+    interval = "60s"
+    method = "get"
+    path = "/blobcdn.svg"
+    port = 3000
+    timeout = "10s"
+    type = "http"
