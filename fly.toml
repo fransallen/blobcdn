@@ -28,3 +28,6 @@ primary_region = 'sin'
     port = 3000
     timeout = "10s"
     type = "http"
+
+[http_service.http_options.response]
+  pristine = true
