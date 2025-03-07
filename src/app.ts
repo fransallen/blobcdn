@@ -41,8 +41,8 @@ export async function getApp(req: Request, res: Response): Promise<void> {
       .header(
         'Blob-Version',
         `${
-          process.env.VERSION
-            ? `${process.env.VERSION}-${os.hostname()}`
+          process.env.PRIMARY_REGION
+            ? `${os.hostname()}-${[process.env.PRIMARY_REGION]}`
             : '1.0-dev'
         }`,
       )
